@@ -5,10 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LeitorPCAP.Tela"
         mc:Ignorable="d"
-        Title="MainWindow" Height="500" Width="820" ResizeMode="NoResize">
+        Title="MainWindow" Height="500" Width="740" ResizeMode="NoResize" Background="LightGray">
     <Grid>
 
-        <DockPanel DockPanel.Dock="Top" HorizontalAlignment="Left" MinWidth="50" Margin="10,10,10,10" MaxWidth="700">
+        <DockPanel DockPanel.Dock="Top" HorizontalAlignment="Left" MinWidth="50" Margin="10,10,10,10" MaxWidth="700" Background="LightGray" Height="40" VerticalAlignment="Top">
             <TextBox Height="Auto" Margin="0,0,0,0" 
                      TextWrapping="Wrap" Text="{ Binding ArquivoSelecionado, Mode=TwoWay}" 
                      HorizontalAlignment="Left"
@@ -17,9 +17,9 @@
             <Button Content="Entrar" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Click="Button_Click"/>
         </DockPanel>
 
-        <DockPanel Height ="380" Margin="0,0,0,0" DockPanel.Dock="Top">
+        <DockPanel Height ="400" Margin="0,0,0,0" DockPanel.Dock="Top">
 
-            <DockPanel Width="380"  DockPanel.Dock="Left" Margin ="10,0,0,0" HorizontalAlignment="Left" MinWidth="50" MaxWidth="700">
+            <DockPanel Width="420"  DockPanel.Dock="Left" Margin ="10,0,0,0" HorizontalAlignment="Left" MinWidth="50" MaxWidth="700">
 
                 <ListView ItemsSource="{Binding Pacotes, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectionChanged="ListView_SelectionChanged" Width="Auto">
 
@@ -27,6 +27,8 @@
 
                         <GridView AllowsColumnReorder="true" ColumnHeaderToolTip="Employee Information">
 
+                            <GridViewColumn DisplayMemberBinding="{Binding Path = Index}" Header="Num." Width="40"/>
+                            
                             <GridViewColumn DisplayMemberBinding="{Binding Path = Protocolo}" Header="Protocolo" Width="70"/>
 
                             <GridViewColumn DisplayMemberBinding="{Binding Path = Versao}" Width="50" Header="Versao"/>
@@ -34,15 +36,18 @@
                             <GridViewColumn DisplayMemberBinding="{Binding Path = EnderecoOrigem}" Header="Endereço de Origem" Width="120"/>
 
                             <GridViewColumn DisplayMemberBinding="{Binding Path = EnderecoDestino}" Header="Endereço de Destino" Width="120"/>
+                            
+                            <GridViewColumn DisplayMemberBinding="{Binding Path = Flags}" Header="Flags" Width="120"/>
                         </GridView>
 
                     </ListView.View>
                 </ListView>
             </DockPanel>
-            <DockPanel Width="400" Margin ="10,10,10,10" DockPanel.Dock="Left" HorizontalAlignment="Right" MinWidth="50" MaxWidth="700">
+            
+            <DockPanel Width="400" Margin ="10,10,10,10" DockPanel.Dock="Left" HorizontalAlignment="Left" MinWidth="50" MaxWidth="700">
 
                 <DockPanel Width="Auto" HorizontalAlignment="Left" DockPanel.Dock="Top">
-                    <Label Content="Porta Origem:" />
+                    <Label Content="Porta Origem:"/>
                     <Label Content="{Binding  PacoteSelecionado.PortaOrigem, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
                 </DockPanel>
                 <DockPanel Width="Auto" HorizontalAlignment="Left" DockPanel.Dock="Top">
@@ -80,6 +85,14 @@
                 <DockPanel Width="Auto" HorizontalAlignment="Left" DockPanel.Dock="Top">
                     <Label Content="Acknowledgment:" />
                     <Label Content="{Binding  PacoteSelecionado.ACK, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                </DockPanel>
+                <DockPanel Width="Auto" HorizontalAlignment="Left" DockPanel.Dock="Top">
+                    <Label Content="Tamanho da Janela:" />
+                    <Label Content="{Binding  PacoteSelecionado.Janela, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                </DockPanel>
+                <DockPanel Width="Auto" HorizontalAlignment="Left" DockPanel.Dock="Top">
+                    <Label Content="Time Stamp" />
+                    <Label Content="{Binding  PacoteSelecionado.TimeStamp, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
                 </DockPanel>
             </DockPanel>
         </DockPanel>

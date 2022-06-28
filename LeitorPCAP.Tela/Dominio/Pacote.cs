@@ -1,17 +1,30 @@
 ﻿using PacketDotNet;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace LeitorPCAP.Tela.Dominio
 {
     public record Pacote
     {
-        public Pacote(IPPacket pacotePai, TcpPacket pacoteTCP)
+        private readonly string[] flagNames = new string[]
+                {
+                "Fin",
+                "Syn",
+                "Reset",
+                "Push",
+                "Acknowledgemnt",
+                "Urgent",
+                "Echo",
+                "Congestion",
+                "Nonce"
+                };
+
+        public Pacote(IPPacket pacotePai, TcpPacket pacoteTCP, TimeSpan timeStamp, int index)
         {
+            Index = index;
+            TimeStamp = timeStamp;
+
             PortaOrigem = pacoteTCP.SourcePort;
             PortaDestino = pacoteTCP.DestinationPort;
 
@@ -24,38 +37,50 @@ namespace LeitorPCAP.Tela.Dominio
 
             TamanhoCabecalho = pacotePai.HeaderLength;
 
-            Flags = DecimalParaBinario(pacoteTCP.Flags);
+            Flags = PegarFlags(pacoteTCP.Flags);
 
             ACK = pacoteTCP.AcknowledgmentNumber;
 
             SEQ = pacoteTCP.SequenceNumber;
+
+            Janela = pacoteTCP.WindowSize;
+
+            Tamanho = pacoteTCP.TotalPacketLength;
+
+            Checksum = pacoteTCP.Checksum;
         }
 
-        public ushort PortaOrigem { get;  }
+        public int Index { get; }
+        public TimeSpan TimeStamp { get; }
+        public ushort PortaOrigem { get; }
         public ushort PortaDestino { get; }
+        public ushort Janela { get; }
+        public ushort Checksum { get; }
         public IPAddress EnderecoOrigem { get; }
         public IPAddress EnderecoDestino { get; }
 
-        public ProtocolType Protocolo { get;  }
+        public ProtocolType Protocolo { get; }
         public IPVersion Versao { get; }
         public int TamanhoCabecalho { get; }
+        public int Tamanho { get; }
 
-        public string Flags { get;  }
+        public string Flags { get; }
         public uint ACK { get; }
-        public uint SEQ { get;  }
+        public uint SEQ { get; }
 
-        string DecimalParaBinario(ushort n)
+        string PegarFlags(ushort flags)
         {
-            ushort resto;
-            var result = "";
-            while(n > 0)
-            {
-                resto = (ushort)(n % 2);
-                n /= 2;
-                result = resto.ToString() + result;
-            }
-            return result.ToString();
-        }
+            var str = new StringBuilder();
 
+            for(int i = 0; i < flagNames.Length; i++)
+            {
+                var mask = (ushort)Math.Pow(2, i);
+
+                if((mask & flags) == mask)
+                    str.Append($"{flagNames[i]}, ");
+            }
+
+            return str.ToString()[0..^2];
+        }
     }
 }

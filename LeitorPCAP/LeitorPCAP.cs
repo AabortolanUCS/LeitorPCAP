@@ -6,8 +6,8 @@ namespace LeitorPCAP
 {
     public class LeitorPCAP
     {
-        private IList<(IPPacket pacoteIP, TcpPacket pacoteTCP)> _pacotes = new List<(IPPacket, TcpPacket)>();
-        public IEnumerable<(IPPacket pacoteIP, TcpPacket pacoteTCP)> PegarPacotes(string caminhoArquivo)
+        private IList<(int index, IPPacket pacoteIP, TcpPacket pacoteTCP, TimeSpan tempo)> _pacotes = new List<(int, IPPacket, TcpPacket, TimeSpan)>();
+        public IEnumerable<(int index, IPPacket pacoteIP, TcpPacket pacoteTCP, TimeSpan tempo)> PegarPacotes(string caminhoArquivo)
         {
             ICaptureDevice device;
 
@@ -16,7 +16,7 @@ namespace LeitorPCAP
                 device = new CaptureFileReaderDevice(caminhoArquivo);
                 device.Open();
             }
-            catch (Exception e)
+            catch(Exception e)
             {
                 Console.WriteLine("Erro ao abrir o arquivo: " + e.ToString());
                 return null;
@@ -40,7 +40,7 @@ namespace LeitorPCAP
             var tempo = e.Header.Timeval.Date;
             var rawPacket = e.GetPacket();
 
-            if (tempoPrimeiroPacote == default(DateTime))
+            if(tempoPrimeiroPacote == default(DateTime))
             {
                 tempoPrimeiroPacote = tempo;
             }
@@ -49,8 +49,8 @@ namespace LeitorPCAP
 
             var pacoteTcp = pacote.Extract<TcpPacket>();
 
-            if (pacoteTcp is not null)
-                _pacotes.Add(((IPPacket)pacoteTcp.ParentPacket, pacoteTcp));
+            if(pacoteTcp is not null)
+                _pacotes.Add((numeroPacote++, (IPPacket)pacoteTcp.ParentPacket, pacoteTcp, tempo - tempoPrimeiroPacote));
         }
     }
 }

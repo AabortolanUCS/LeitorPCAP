@@ -30,7 +30,7 @@ namespace LeitorPCAP.Tela
             var leitor = new LeitorPCAP();
             var pacotesLidos = leitor.PegarPacotes(viewModel.ArquivoSelecionado);
 
-            viewModel.Pacotes = pacotesLidos.Select(p => new Pacote(p.pacoteIP, p.pacoteTCP));
+            viewModel.Pacotes = pacotesLidos.Select(p => new Pacote(p.pacoteIP, p.pacoteTCP, p.tempo, p.index));
         }
     }
 }
