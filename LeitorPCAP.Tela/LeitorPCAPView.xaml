@@ -5,70 +5,82 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LeitorPCAP.Tela"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" ResizeMode="NoResize">
+        Title="MainWindow" Height="500" Width="820" ResizeMode="NoResize">
     <Grid>
 
-        <DockPanel Width="380" HorizontalAlignment="Left" MinWidth="50" MaxWidth="700">
-
-            <ListView ItemsSource="{Binding Pacotes}" SelectionChanged="ListView_SelectionChanged" Width="Auto">
-
-                <ListView.View>
-
-                    <GridView AllowsColumnReorder="true" ColumnHeaderToolTip="Employee Information">
-                        
-                        <GridViewColumn DisplayMemberBinding="{Binding Path = Protocolo}" Header="Protocolo" Width="70"/>
-
-                        <GridViewColumn DisplayMemberBinding="{Binding Path = Versao}" Width="50" Header="Versao"/>
-
-                        <GridViewColumn DisplayMemberBinding="{Binding Path = EnderecoOrigem}" Header="Endereço de Origem" Width="120"/>
-
-                        <GridViewColumn DisplayMemberBinding="{Binding Path = EnderecoDestino}" Header="Endereço de Destino" Width="120"/>
-                    </GridView>
-
-                </ListView.View>
-            </ListView>
+        <DockPanel DockPanel.Dock="Top" HorizontalAlignment="Left" MinWidth="50" Margin="10,10,10,10" MaxWidth="700">
+            <TextBox Height="Auto" Margin="0,0,0,0" 
+                     TextWrapping="Wrap" Text="{ Binding ArquivoSelecionado, Mode=TwoWay}" 
+                     HorizontalAlignment="Left"
+                     VerticalAlignment="Top" ToolTip="Digite ou cole o caminho do arquivo" 
+                     Width="650"/>
+            <Button Content="Entrar" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Click="Button_Click"/>
         </DockPanel>
-        <DockPanel Width="400" HorizontalAlignment="Right" MinWidth="50" MaxWidth="700">
 
-            <DockPanel Width="Auto" HorizontalAlignment="Left" DockPanel.Dock="Top">
-                <Label Content="Porta Origem:" />
-                <Label Content="{Binding  PacoteSelecionado.PortaOrigem, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+        <DockPanel Height ="380" Margin="0,0,0,0" DockPanel.Dock="Top">
+
+            <DockPanel Width="380"  DockPanel.Dock="Left" Margin ="10,0,0,0" HorizontalAlignment="Left" MinWidth="50" MaxWidth="700">
+
+                <ListView ItemsSource="{Binding Pacotes, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectionChanged="ListView_SelectionChanged" Width="Auto">
+
+                    <ListView.View>
+
+                        <GridView AllowsColumnReorder="true" ColumnHeaderToolTip="Employee Information">
+
+                            <GridViewColumn DisplayMemberBinding="{Binding Path = Protocolo}" Header="Protocolo" Width="70"/>
+
+                            <GridViewColumn DisplayMemberBinding="{Binding Path = Versao}" Width="50" Header="Versao"/>
+
+                            <GridViewColumn DisplayMemberBinding="{Binding Path = EnderecoOrigem}" Header="Endereço de Origem" Width="120"/>
+
+                            <GridViewColumn DisplayMemberBinding="{Binding Path = EnderecoDestino}" Header="Endereço de Destino" Width="120"/>
+                        </GridView>
+
+                    </ListView.View>
+                </ListView>
             </DockPanel>
-            <DockPanel Width="Auto" HorizontalAlignment="Left" DockPanel.Dock="Top">
-                <Label Content="Porta Destino:" />
-                <Label Content="{Binding  PacoteSelecionado.PortaDestino, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
-            </DockPanel>
-            <DockPanel Width="Auto" HorizontalAlignment="Left" DockPanel.Dock="Top">
-                <Label Content="Endereço Origem:" />
-                <Label Content="{Binding  PacoteSelecionado.EnderecoOrigem, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
-            </DockPanel>
-            <DockPanel Width="Auto" HorizontalAlignment="Left" DockPanel.Dock="Top">
-                <Label Content="Endereço Destino:" />
-                <Label Content="{Binding  PacoteSelecionado.EnderecoDestino, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
-            </DockPanel>
-            <DockPanel Width="Auto" HorizontalAlignment="Left" DockPanel.Dock="Top">
-                <Label Content="Versão:" />
-                <Label Content="{Binding  PacoteSelecionado.Versao, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
-            </DockPanel>
-            <DockPanel Width="Auto" HorizontalAlignment="Left" DockPanel.Dock="Top">
-                <Label Content="Protocolo:" />
-                <Label Content="{Binding  PacoteSelecionado.Protocolo, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
-            </DockPanel>
-            <DockPanel Width="Auto" HorizontalAlignment="Left" DockPanel.Dock="Top">
-                <Label Content="Tamanho do Cabeçalho:" />
-                <Label Content="{Binding  PacoteSelecionado.TamanhoCabecalho, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
-            </DockPanel>
-            <DockPanel Width="Auto" HorizontalAlignment="Left" DockPanel.Dock="Top">
-                <Label Content="Flags:" />
-                <Label Content="{Binding  PacoteSelecionado.Flags, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
-            </DockPanel>
-            <DockPanel Width="Auto" HorizontalAlignment="Left" DockPanel.Dock="Top">
-                <Label Content="Sequence:" />
-                <Label Content="{Binding  PacoteSelecionado.SEQ, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
-            </DockPanel>
-            <DockPanel Width="Auto" HorizontalAlignment="Left" DockPanel.Dock="Top">
-                <Label Content="Acknowledgment:" />
-                <Label Content="{Binding  PacoteSelecionado.ACK, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+            <DockPanel Width="400" Margin ="10,10,10,10" DockPanel.Dock="Left" HorizontalAlignment="Right" MinWidth="50" MaxWidth="700">
+
+                <DockPanel Width="Auto" HorizontalAlignment="Left" DockPanel.Dock="Top">
+                    <Label Content="Porta Origem:" />
+                    <Label Content="{Binding  PacoteSelecionado.PortaOrigem, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                </DockPanel>
+                <DockPanel Width="Auto" HorizontalAlignment="Left" DockPanel.Dock="Top">
+                    <Label Content="Porta Destino:" />
+                    <Label Content="{Binding  PacoteSelecionado.PortaDestino, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                </DockPanel>
+                <DockPanel Width="Auto" HorizontalAlignment="Left" DockPanel.Dock="Top">
+                    <Label Content="Endereço Origem:" />
+                    <Label Content="{Binding  PacoteSelecionado.EnderecoOrigem, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                </DockPanel>
+                <DockPanel Width="Auto" HorizontalAlignment="Left" DockPanel.Dock="Top">
+                    <Label Content="Endereço Destino:" />
+                    <Label Content="{Binding  PacoteSelecionado.EnderecoDestino, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                </DockPanel>
+                <DockPanel Width="Auto" HorizontalAlignment="Left" DockPanel.Dock="Top">
+                    <Label Content="Versão:" />
+                    <Label Content="{Binding  PacoteSelecionado.Versao, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                </DockPanel>
+                <DockPanel Width="Auto" HorizontalAlignment="Left" DockPanel.Dock="Top">
+                    <Label Content="Protocolo:" />
+                    <Label Content="{Binding  PacoteSelecionado.Protocolo, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                </DockPanel>
+                <DockPanel Width="Auto" HorizontalAlignment="Left" DockPanel.Dock="Top">
+                    <Label Content="Tamanho do Cabeçalho:" />
+                    <Label Content="{Binding  PacoteSelecionado.TamanhoCabecalho, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                </DockPanel>
+                <DockPanel Width="Auto" HorizontalAlignment="Left" DockPanel.Dock="Top">
+                    <Label Content="Flags:" />
+                    <Label Content="{Binding  PacoteSelecionado.Flags, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                </DockPanel>
+                <DockPanel Width="Auto" HorizontalAlignment="Left" DockPanel.Dock="Top">
+                    <Label Content="Sequence:" />
+                    <Label Content="{Binding  PacoteSelecionado.SEQ, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                </DockPanel>
+                <DockPanel Width="Auto" HorizontalAlignment="Left" DockPanel.Dock="Top">
+                    <Label Content="Acknowledgment:" />
+                    <Label Content="{Binding  PacoteSelecionado.ACK, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                </DockPanel>
             </DockPanel>
         </DockPanel>
     </Grid>

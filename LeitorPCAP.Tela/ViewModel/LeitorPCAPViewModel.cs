@@ -9,14 +9,19 @@ namespace LeitorPCAP.Tela.ViewModel
     public class LeitorPCAPViewModel: INotifyPropertyChanged
     {
         private Pacote pacoteSelecionado;
+        private string arquivoSelecionado;
+        private IEnumerable<Pacote> pacotes;
 
-        public LeitorPCAPViewModel(IEnumerable<Pacote> pacotes)
+        public IEnumerable<Pacote> Pacotes
         {
-            Pacotes = pacotes;
-            PacoteSelecionado = Pacotes.FirstOrDefault();
+            get => pacotes;
+            set
+            {
+                pacotes = value;
+                this.OnPropertyChanged(nameof(Pacotes));
+                PacoteSelecionado = pacotes.FirstOrDefault();
+            }
         }
-
-        public IEnumerable<Pacote> Pacotes { get; }
 
         public Pacote PacoteSelecionado
         {
@@ -24,7 +29,17 @@ namespace LeitorPCAP.Tela.ViewModel
             set
             {
                 pacoteSelecionado = value;
-                this.OnPropertyChanged(nameof(pacoteSelecionado));
+                this.OnPropertyChanged(nameof(PacoteSelecionado));
+            }
+        }
+
+        public string ArquivoSelecionado
+        {
+            get => arquivoSelecionado;
+            set
+            {
+                arquivoSelecionado = value;
+                this.OnPropertyChanged(nameof(ArquivoSelecionado));
             }
         }
 
