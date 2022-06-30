@@ -6,8 +6,8 @@ namespace LeitorPCAP
 {
     public class LeitorPCAP
     {
-        private IList<(int index, IPPacket pacoteIP, TcpPacket pacoteTCP, TimeSpan tempo)> _pacotes = new List<(int, IPPacket, TcpPacket, TimeSpan)>();
-        public IEnumerable<(int index, IPPacket pacoteIP, TcpPacket pacoteTCP, TimeSpan tempo)> PegarPacotes(string caminhoArquivo)
+        private IList<(int index, IPPacket pacoteIP, TransportPacket pacoteTCP, TimeSpan tempo)> _pacotes = new List<(int, IPPacket, TransportPacket, TimeSpan)>();
+        public IEnumerable<(int index, IPPacket pacoteIP, TransportPacket pacoteTCP, TimeSpan tempo)> PegarPacotes(string caminhoArquivo)
         {
             ICaptureDevice device;
 
@@ -47,7 +47,7 @@ namespace LeitorPCAP
 
             var pacote = Packet.ParsePacket(rawPacket.LinkLayerType, rawPacket.Data);
 
-            var pacoteTcp = pacote.Extract<TcpPacket>();
+            var pacoteTcp = pacote.Extract<TransportPacket>();
 
             if(pacoteTcp is not null)
                 _pacotes.Add((numeroPacote++, (IPPacket)pacoteTcp.ParentPacket, pacoteTcp, tempo - tempoPrimeiroPacote));

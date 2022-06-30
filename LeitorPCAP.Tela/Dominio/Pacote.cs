@@ -20,13 +20,13 @@ namespace LeitorPCAP.Tela.Dominio
                 "Nonce"
                 };
 
-        public Pacote(IPPacket pacotePai, TcpPacket pacoteTCP, TimeSpan timeStamp, int index)
+        public Pacote(IPPacket pacotePai, TransportPacket transportPacket, TimeSpan timeStamp, int index)
         {
             Index = index;
             TimeStamp = timeStamp;
 
-            PortaOrigem = pacoteTCP.SourcePort;
-            PortaDestino = pacoteTCP.DestinationPort;
+            PortaOrigem = transportPacket.SourcePort;
+            PortaDestino = transportPacket.DestinationPort;
 
             EnderecoOrigem = pacotePai.SourceAddress;
             EnderecoDestino = pacotePai.DestinationAddress;
@@ -37,18 +37,25 @@ namespace LeitorPCAP.Tela.Dominio
 
             TamanhoCabecalho = pacotePai.HeaderLength;
 
-            Flags = PegarFlags(pacoteTCP.Flags);
+            if(transportPacket is TcpPacket pacoteTCP)
+            {
+                Flags = PegarFlags(pacoteTCP.Flags);
 
-            ACK = pacoteTCP.AcknowledgmentNumber;
+                ACK = pacoteTCP.AcknowledgmentNumber;
 
-            SEQ = pacoteTCP.SequenceNumber;
+                SEQ = pacoteTCP.SequenceNumber;
 
-            Janela = pacoteTCP.WindowSize;
+                Janela = pacoteTCP.WindowSize;
+            }
 
-            Tamanho = pacoteTCP.TotalPacketLength;
+            Tamanho = transportPacket.TotalPacketLength;
 
-            Checksum = pacoteTCP.Checksum;
+            Checksum = transportPacket.Checksum;
+
+            source = transportPacket;
         }
+
+        private TransportPacket source;
 
         public int Index { get; }
         public TimeSpan TimeStamp { get; }
