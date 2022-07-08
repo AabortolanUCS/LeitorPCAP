@@ -7,4 +7,4 @@ O LeitorPCAP é um software desenvolvido em C# utilizando WPF que através de um
 
 Obs: é necessário ter a DLL WinPcap instalada: [WinPCap](https://www.winpcap.org/install/)
 
-Para instalar o framework utilizado: [Download .NET 6.0 (Linux, macOS, and Windows) (microsoft.com)](https://dotnet.microsoft.com/en-us/download/dotnet/6.0)
+Para instalar o framework utilizado: [Download .NET 6.0](https://dotnet.microsoft.com/en-us/download/dotnet/6.0)
